@@ -11,9 +11,9 @@ export class TrainingService {
 
   private availableExercises: Exercise[] = [
     { id: "crunches", name: "Crunches", duration: 30, calories: 8 },
-    { id: "touch-toes", name: "Touch Toes", duration: 180, calories: 50 },
-    { id: "side-lunges", name: "Side Lunges", duration: 120, calories: 25 },
-    { id: "burpees", name: "Burpees", duration: 60, calories: 12 }
+    { id: "touch-toes", name: "Touch Toes", duration: 50, calories: 15 },
+    { id: "side-lunges", name: "Side Lunges", duration: 25, calories: 20 },
+    { id: "burpees", name: "Burpees", duration: 40, calories: 12 }
   ];
 
   private runningExercise: Exercise;
