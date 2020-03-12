@@ -38,7 +38,7 @@ export class TrainingService {
       date: new Date(),
       state: "completed"
     });
-    this.getRunningExercise = null;
+    this.runningExercise = null;
     this.exerciseChanged.next(null);
   }
 
@@ -50,14 +50,13 @@ export class TrainingService {
       date: new Date(),
       state: "cancelled"
     });
-    this.getRunningExercise = null;
+    this.runningExercise = null;
     this.exerciseChanged.next(null);
   }
 
   getRunningExercise() {
     return { ...this.runningExercise };
   }
-
   getCompletedOrCancelledExercises() {
     return this.exercises.slice();
   }
