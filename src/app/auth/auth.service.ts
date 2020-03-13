@@ -1,10 +1,9 @@
-import { Subject } from "rxjs/Subject";
-
 import { Injectable } from "@angular/core";
 import { User } from "./user.model";
 import { AuthData } from "./auth-data.model";
 
 import { Router } from "@angular/router";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
