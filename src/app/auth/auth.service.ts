@@ -5,6 +5,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
+import { TrainingService } from "../training/training.service";
 
 @Injectable({
   providedIn: "root"
@@ -14,14 +15,33 @@ export class AuthService {
   // private user: User;
   private isAuthenticated = false;
 
-  constructor(private router: Router, private afAuth: AngularFireAuth) {}
+  constructor(
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private trainingService: TrainingService
+  ) {}
+
+  initAuthListener() {
+    this.afAuth.authState.subscribe(user => {
+      console.log(user);
+
+      if (user) {
+        this.isAuthenticated = true;
+        this.authChange.next(true);
+        this.router.navigate(["/training"]);
+      } else {
+        this.trainingService.cancelSubscriptions();
+        this.authChange.next(false);
+        this.router.navigate(["/login"]);
+        this.isAuthenticated = false;
+      }
+    });
+  }
 
   registerUser(authData: AuthData) {
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
-      .then(result => {
-        this.authSuccessfully();
-      })
+      .then(result => {})
       .catch(error => {
         console.log(error);
       });
@@ -34,40 +54,17 @@ export class AuthService {
   login(authData: AuthData) {
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
-      .then(result => {
-        this.authSuccessfully();
-      })
+      .then(result => {})
       .catch(error => {
         console.log(error);
       });
-    // this.user = {
-    //   email: authData.email,
-    //   userId: Math.round(Math.random() * 10000).toString()
-    // };
-    // this.authSuccessfully();
   }
 
   logout() {
-    // this.user = null;
-
     this.afAuth.auth.signOut();
-    this.authChange.next(false);
-    this.router.navigate(["/login"]);
-    this.isAuthenticated = false;
   }
-
-  // getUser() {
-  //   return { ...this.user };
-  // }
 
   isAuth() {
-    // return this.user != null;
     return this.isAuthenticated;
-  }
-
-  private authSuccessfully() {
-    this.isAuthenticated = true;
-    this.authChange.next(true);
-    this.router.navigate(["/training"]);
   }
 }
