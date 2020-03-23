@@ -20,9 +20,14 @@
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="center"
                         *ngIf="!isLoading">
-        <button type="submit"
+        <button *ngIf="exercises"
+                type="submit"
                 mat-button
                 [disabled]="f.invalid">Start</button>
+        <button *ngIf="!exercises"
+                type="button"
+                mat-button
+                (click)="fetchExercises()">Fetch again</button>
       </mat-card-actions>
     </mat-card>
   </form>

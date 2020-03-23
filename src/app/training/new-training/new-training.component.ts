@@ -45,8 +45,7 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
         this.exercises = exs;
       }
     );
-    this.trainingService.fatchAvailableExercises();
-
+    this.fetchExercises();
     // .subscribe(result => {
     //   console.log(result);
 
@@ -55,6 +54,10 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
     //   //   }
     //   // });
     // });
+  }
+
+  fetchExercises() {
+    this.trainingService.fatchAvailableExercises();
   }
 
   onStartTraining(form: NgForm) {
