@@ -7,6 +7,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material.module";
+import { StoreModule } from "@ngrx/store";
 
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { HeaderComponent } from "./navigation/header/header.component";
@@ -16,7 +17,8 @@ import { TrainingService } from "./training/training.service";
 import { environment } from "../environments/environment";
 import { UiService } from "./shared/ui.service";
 import { AuthModule } from "./auth/auth.module";
-import { TrainingModule } from "./training/training.module";
+import { AngularFirestoreModule } from "angularfire2/firestore";
+import { appReducer } from "./app.reducer";
 
 @NgModule({
   declarations: [
@@ -31,12 +33,13 @@ import { TrainingModule } from "./training/training.module";
     BrowserAnimationsModule,
     MaterialModule,
     AuthModule,
-    TrainingModule,
     FlexLayoutModule,
+    AngularFirestoreModule,
     AngularFireModule.initializeApp(
       environment.firebase,
       "ng-fitness-tracker-ga"
-    )
+    ),
+    StoreModule.forRoot({ ui: appReducer })
   ],
   providers: [AuthService, TrainingService, UiService],
   bootstrap: [AppComponent]
