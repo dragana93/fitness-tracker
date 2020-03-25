@@ -21,12 +21,12 @@
   <ng-container matColumnDef="calories">
     <mat-header-cell *matHeaderCellDef
                      mat-sort-header>Calories</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{element.calories | number}}</mat-cell>
+    <mat-cell *matCellDef="let element">{{element.calories}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="duration">
     <mat-header-cell *matHeaderCellDef
                      mat-sort-header>Duration</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{element.duration | number}}</mat-cell>
+    <mat-cell *matCellDef="let element">{{element.duration}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="state">
     <mat-header-cell *matHeaderCellDef
