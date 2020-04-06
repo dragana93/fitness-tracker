@@ -9,10 +9,11 @@ import { TrainingService } from "../training/training.service";
 import { UiService } from "../shared/ui.service";
 import { Store } from "@ngrx/store";
 
-import * as formApp from "../app.reducer";
+import * as formRoot from "../app.reducer";
+import * as UI from "../shared/ui.actions";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthService {
   authChange = new Subject<boolean>();
@@ -24,11 +25,11 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private trainingService: TrainingService,
     private uiService: UiService,
-    private store: Store<{ ui: formApp.State }>
+    private store: Store<formRoot.State>
   ) {}
 
   initAuthListener() {
-    this.afAuth.authState.subscribe(user => {
+    this.afAuth.authState.subscribe((user) => {
       console.log(user);
 
       if (user) {
@@ -46,16 +47,19 @@ export class AuthService {
 
   registerUser(authData: AuthData) {
     // this.uiService.loadingStateChanged.next(true);
-    this.store.dispatch({ type: "START_LOADING" });
+    // this.store.dispatch({ type: "START_LOADING" });
+    this.store.dispatch(new UI.StartLoadingAction());
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
-      .then(result => {
+      .then((result) => {
         // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch({ type: "STOP_LOADING" });
+        // this.store.dispatch({ type: "STOP_LOADING" });
+        this.store.dispatch(new UI.StopLoadingAction());
       })
-      .catch(error => {
+      .catch((error) => {
         // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch({ type: "STOP_LOADING" });
+        // this.store.dispatch({ type: "STOP_LOADING" });
+        this.store.dispatch(new UI.StopLoadingAction());
         this.uiService.showSnackbar(error.message, null, 3000);
       });
     // this.user = {
@@ -66,17 +70,20 @@ export class AuthService {
 
   login(authData: AuthData) {
     // this.uiService.loadingStateChanged.next(true);
-    this.store.dispatch({ type: "START_LOADING" });
+    // this.store.dispatch({ type: "START_LOADING" });
+    this.store.dispatch(new UI.StartLoadingAction());
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
-      .then(result => {
+      .then((result) => {
         console.log(result);
         // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch({ type: "STOP_LOADING" });
+        // this.store.dispatch({ type: "STOP_LOADING" });
+        this.store.dispatch(new UI.StopLoadingAction());
       })
-      .catch(error => {
+      .catch((error) => {
         // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch({ type: "STOP_LOADING" });
+        // this.store.dispatch({ type: "STOP_LOADING" });
+        this.store.dispatch(new UI.StopLoadingAction());
         this.uiService.showSnackbar(error.message, null, 3000);
       });
   }

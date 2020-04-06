@@ -6,12 +6,12 @@ import { UiService } from "src/app/shared/ui.service";
 import { Subscription, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Store } from "@ngrx/store";
-import * as formApp from "../../app.reducer";
+import * as formRoot from "../../app.reducer";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -21,11 +21,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private uiService: UiService,
-    private store: Store<{ ui: formApp.State }>
+    private store: Store<formRoot.State>
   ) {}
 
   ngOnInit(): void {
-    this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
+    // this.isLoading$ = this.store.pipe(map((state) => state.ui.isLoading));
+    this.isLoading$ = this.store.select(formRoot.getIsLoading);
     // this.loadingSubs = this.uiService.loadingStateChanged.subscribe(
     //   isLoading => {
     //     this.isLoading = isLoading;
@@ -33,18 +34,18 @@ export class LoginComponent implements OnInit {
     // );
     this.loginForm = new FormGroup({
       email: new FormControl("", {
-        validators: [Validators.required, Validators.email]
+        validators: [Validators.required, Validators.email],
       }),
       password: new FormControl("", {
-        validators: [Validators.required]
-      })
+        validators: [Validators.required],
+      }),
     });
   }
 
   onSubmit() {
     this.authService.login({
       email: this.loginForm.value.email,
-      password: this.loginForm.value.password
+      password: this.loginForm.value.password,
     });
     console.warn(this.loginForm.value);
   }

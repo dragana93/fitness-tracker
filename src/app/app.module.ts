@@ -18,14 +18,14 @@ import { environment } from "../environments/environment";
 import { UiService } from "./shared/ui.service";
 import { AuthModule } from "./auth/auth.module";
 import { AngularFirestoreModule } from "angularfire2/firestore";
-import { appReducer } from "./app.reducer";
+import { reducers } from "./app.reducer";
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,9 +39,9 @@ import { appReducer } from "./app.reducer";
       environment.firebase,
       "ng-fitness-tracker-ga"
     ),
-    StoreModule.forRoot({ ui: appReducer })
+    StoreModule.forRoot(reducers),
   ],
   providers: [AuthService, TrainingService, UiService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
