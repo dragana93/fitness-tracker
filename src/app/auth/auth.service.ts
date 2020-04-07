@@ -4,7 +4,7 @@ import { AuthData } from "./auth-data.model";
 import { AngularFireAuth } from "angularfire2/auth";
 
 import { Router } from "@angular/router";
-import { Subject } from "rxjs";
+// import { Subject } from "rxjs";
 import { TrainingService } from "../training/training.service";
 import { UiService } from "../shared/ui.service";
 import { Store } from "@ngrx/store";
@@ -12,11 +12,13 @@ import { Store } from "@ngrx/store";
 import * as formRoot from "../app.reducer";
 import * as UI from "../shared/ui.actions";
 
+import * as Auth from "../auth/auth.actions";
+
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  authChange = new Subject<boolean>();
+  // authChange = new Subject<boolean>();
   // private user: User;
   private isAuthenticated = false;
 
@@ -33,14 +35,16 @@ export class AuthService {
       console.log(user);
 
       if (user) {
-        this.isAuthenticated = true;
-        this.authChange.next(true);
+        this.store.dispatch(new Auth.SetAuthenticatedAction());
+        // this.isAuthenticated = true;
+        // this.authChange.next(true);
         this.router.navigate(["/training"]);
       } else {
         this.trainingService.cancelSubscriptions();
-        this.authChange.next(false);
+        // this.authChange.next(false);
+        this.store.dispatch(new Auth.SetUnauthenticatedAction());
         this.router.navigate(["/login"]);
-        this.isAuthenticated = false;
+        // this.isAuthenticated = false;
       }
     });
   }
@@ -92,7 +96,7 @@ export class AuthService {
     this.afAuth.auth.signOut();
   }
 
-  isAuth() {
-    return this.isAuthenticated;
-  }
+  // isAuth() {
+  //   return this.isAuthenticated;
+  // }
 }
