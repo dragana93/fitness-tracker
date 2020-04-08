@@ -2,28 +2,28 @@
   <a mat-list-item
      routerLink="/signup"
      (click)="onClose()"
-     *ngIf="!isAuth">
+     *ngIf="!(isAuth$ | async)">
     <mat-icon class="nav-caption">face</mat-icon>
     <span>Signup</span>
   </a>
   <a mat-list-item
      routerLink="/login"
      (click)="onClose()"
-     *ngIf="!isAuth">
+     *ngIf="!(isAuth$ | async)">
     <mat-icon class="nav-caption">input</mat-icon>
     <span>Login</span>
   </a>
   <a mat-list-item
      routerLink="/training"
      (click)="onClose()"
-     *ngIf="isAuth">
+     *ngIf="isAuth$ | async">
     <mat-icon class="nav-caption">fitness_center</mat-icon>
     <span>Training</span>
   </a>
   <mat-list-item>
     <button mat-icon-button
             (click)="onLogout()"
-            *ngIf="isAuth">
+            *ngIf="isAuth$ | async">
       <mat-icon class="nav-caption">eject</mat-icon>
       <span>Logout</span>
     </button>
