@@ -47,6 +47,6 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     });
-    console.warn(this.loginForm.value);
+    // console.warn(this.loginForm.value);
   }
 }
