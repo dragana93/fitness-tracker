@@ -29,6 +29,8 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     this.store
       .select(formTraining.getFinishedExercises)
       .subscribe((exercises: Exercise[]) => {
@@ -38,8 +40,8 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
   // ngOnDestroy() {
