@@ -13,7 +13,7 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
       <button mat-button [mat-dialog-close]="false">No</button>
     </mat-dialog-actions>
   `,
-  styleUrls: ["./current-training.component.css"]
+  styleUrls: ["./current-training.component.css"],
 })
 export class StopTrainingComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public passedData: any) {}
